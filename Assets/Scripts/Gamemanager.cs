@@ -118,6 +118,42 @@ public class Gamemanager : MonoBehaviour
 
     }
 
+    public void DeleteItemFrom3D(string itemName)
+    {
+        // y dimension
+        for (int y = 0; y < warehouse3D.GetLength(0); y++)
+        {
+            // x dimension
+            for (int x = 0; x < warehouse3D.GetLength(1); x++)
+            {
+                // z dimension
+                for (int z = 0; z < warehouse3D.GetLength(2); z++)
+                {
+                    // do non-null check
+                    if (warehouse3D[y,x,z] != null)
+                    {
+                        // do name check, remove
+                        if (warehouse3D[y,x,z].CompareTo(itemName) == 0)
+                        {
+                            warehouse3D[y,x,z]= null;
+                        }
+                    }
+                }
+            }
+        }
+        for(int i =0; i < itemList.Count;i++)
+        {
+            if (itemList[i].Name.CompareTo(itemName) == 0)
+                filledSpace+= itemList[i].Height * itemList[i].Width * itemList[i].Length;
+        }
+        itemList.RemoveAll(item => item.Name == itemName);
+        /* 
+        foreach (Item item in itemList)
+        {
+            if (item.Name.CompareTo(itemName) == 0)
+                itemList.Remove(item);        }*/
+    }
+
     public void debugWarehouse3D()
     {
         for (int y = 0; y < warehouse3D.GetLength(0); y++)
