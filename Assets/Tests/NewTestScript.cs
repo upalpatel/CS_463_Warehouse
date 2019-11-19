@@ -4,10 +4,18 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+
 namespace Tests
 {
     public class NewTestScript
     {
+        // make a gamemanager for testing
+        Gamemanager game = new Gamemanager();
+        // make a test Item
+        // name, height, width, length, quantity
+        Item crate = new Item("crate", 1, 1, 1, 1);
+
+
         // A Test behaves as an ordinary method
         [Test]
         public void NewTestScriptSimplePasses()
@@ -23,6 +31,35 @@ namespace Tests
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
             yield return null;
+
+        }
+
+        [Test]
+        public void CheckInputBound()
+        {
+            // Assert
+            GameObject gameobject;
+            gameobject = new GameObject();
+        }
+        [Test]
+        public void ValidRender()
+        {
+            //
+        }
+        [Test]
+        public void PackingTest()
+        {
+
+        }
+        [Test]
+        public void AddItem()
+        {
+
+        }
+        [Test]
+        public void DeleteItem()
+        {
+            
         }
     }
 }
