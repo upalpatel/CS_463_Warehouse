@@ -13,6 +13,7 @@ public class AddItem : MonoBehaviour
     public Text width;
     public Text length;
     public Text space;
+    public GameObject fail;
 
     public void Awake()
     {
@@ -31,8 +32,23 @@ public class AddItem : MonoBehaviour
         Item myItem = new Item(itemName.text, Int32.Parse(height.text),
         Int32.Parse(width.text), Int32.Parse(length.text), Int32.Parse(quantity.text));
 
-        m_instance.addItemToList(myItem);
-        space.text = m_instance.filledSpace + "/" + m_instance.capacity;
+        if (Gamemanager._instance.filledSpace - myItem.Height * myItem.Width * myItem.Length > 0)
+        {
+            m_instance.addItemToList(myItem);
+            space.text = m_instance.filledSpace + "/" + m_instance.capacity;
+        }
+        else
+        {
+            Debug.Log("Failed to add item");
+            StartCoroutine(failText());
+        }
+    }
+
+    IEnumerator failText()
+    {
+        fail.SetActive(true);
+        yield return new WaitForSeconds(5);
+        fail.SetActive(false);
     }
 
     // remaining space in defined warehouse
