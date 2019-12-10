@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class Warehouse : MonoBehaviour
 {
     Gamemanager m_instance;
     public Text height;
     public Text width;
     public Text length;
+    public GameObject fail;
 
     public void Start()
     {
@@ -17,6 +20,16 @@ public class Warehouse : MonoBehaviour
 
     public void outputDimensions()
     {
+        if (
+            (height.text) == "" ||
+            (width.text) == "" ||
+            (length.text) == "")
+        {
+            Debug.Log("Failed to make warehouse");
+            StartCoroutine(failText());
+            return;
+        }
+
         // parse height, width, length
         m_instance.warehouseHeight = Int32.Parse(height.text);
         m_instance.warehouseWidth = Int32.Parse(width.text);
@@ -28,7 +41,7 @@ public class Warehouse : MonoBehaviour
 
         // define range of 3d array
         m_instance.warehouse3D = new string[m_instance.warehouseHeight, m_instance.warehouseWidth, m_instance.warehouseLength];
-        
+
         // intialize all elements to "" empty instead of null
         /* 
         for (int y = 0; y < m_instance.warehouse3D.GetLength(0); y++)
@@ -47,5 +60,14 @@ public class Warehouse : MonoBehaviour
         //Debug.Log(height.text);
         //Debug.Log(width.text);
         //Debug.Log(length.text);
+        
+        // load scene 2, add items
+        SceneManager.LoadScene(2);
+    }
+    IEnumerator failText()
+    {
+        fail.SetActive(true);
+        yield return new WaitForSeconds(3);
+        fail.SetActive(false);
     }
 }

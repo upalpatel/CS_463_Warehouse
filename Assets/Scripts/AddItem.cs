@@ -29,6 +29,18 @@ public class AddItem : MonoBehaviour
     {
         //Debug.Log(itemName.text);
         //Debug.Log(Int32.Parse(quantity.text));
+        if(
+            (height.text) == "" ||
+            (width.text) == "" ||
+            (length.text) == "" ||
+            (itemName.text) == "" ||
+            (quantity.text) == ""
+        )
+        {
+            Debug.Log("Failed to add item");
+            StartCoroutine(failText());
+            return;
+        }
         Item myItem = new Item(itemName.text, Int32.Parse(height.text),
         Int32.Parse(width.text), Int32.Parse(length.text), Int32.Parse(quantity.text));
 
@@ -47,7 +59,7 @@ public class AddItem : MonoBehaviour
     IEnumerator failText()
     {
         fail.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         fail.SetActive(false);
     }
 
